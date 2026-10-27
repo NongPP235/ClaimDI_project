@@ -8,11 +8,11 @@
     "start": "next start --hostname 0.0.0.0",
     "typecheck": "tsc --noEmit",
     "test": "node --experimental-strip-types --test tests/*.test.ts",
-    "create-admin": "node --experimental-strip-types scripts/create-admin.ts",
+    "create-admin": "node --env-file-if-exists=.env --env-file-if-exists=.env.local --experimental-strip-types scripts/create-admin.ts",
     "his-sample": "node --experimental-strip-types scripts/write-his-sample.ts",
-    "test:critical": "node --experimental-strip-types scripts/critical-flow.ts",
-    "import-sqlite": "node --experimental-strip-types scripts/import-sqlite.ts",
-    "backup": "node --experimental-strip-types scripts/backup.ts"
+    "test:critical": "node --env-file-if-exists=.env --env-file-if-exists=.env.local --experimental-strip-types scripts/critical-flow.ts",
+    "import-sqlite": "node --env-file-if-exists=.env --env-file-if-exists=.env.local --experimental-strip-types scripts/import-sqlite.ts",
+    "backup": "node --env-file-if-exists=.env --env-file-if-exists=.env.local --experimental-strip-types scripts/backup.ts"
   },
   "dependencies": {
     "@electric-sql/pglite": "^0.3.16",

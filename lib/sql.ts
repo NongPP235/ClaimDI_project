@@ -117,7 +117,10 @@ async function pglite(dir: string): Promise<Backend> {
 const store = globalThis as unknown as { claimSql?: Promise<Backend> };
 export function backend() {
   if (!store.claimSql) {
-    const url = process.env.DATABASE_URL;
+    // Tests always use an in-memory database, even when DATABASE_URL is set
+    // in the shell, so they can never write to Supabase.
+    const memory = process.env.PGLITE_DIR === "memory://";
+    const url = memory ? undefined : process.env.DATABASE_URL;
     if (!url && process.env.VERCEL)
       throw new Error("DATABASE_URL is required on Vercel (README)");
     store.claimSql = url

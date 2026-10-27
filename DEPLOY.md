@@ -104,6 +104,8 @@ npm run test:critical
 
 ## ปัญหาที่พบบ่อย
 
-- `/api/health` ได้ `unavailable`: ตรวจ `DATABASE_URL` ใน Vercel (รหัสผ่าน, port 6543) ดู log ที่ Vercel → Deployments → Functions และดูว่าโปรเจกต์ Supabase ไม่ได้ถูกหยุดชั่วคราว
+- `/api/health` ได้ `unavailable`: ดูข้อความใน `reason` ซึ่งบอกสาเหตุ เช่น ยังไม่ได้ตั้ง `DATABASE_URL`, รหัสผ่านผิด หรือ host ไม่ตรง (ไม่แสดงรหัสผ่าน) ดู log เพิ่มที่ Vercel → Deployments → Logs
+- ไฟล์ `.env` ในเครื่องไม่ได้ขึ้นไปกับ Vercel (`.gitignore` กันไว้เพื่อไม่ให้รหัสผ่านหลุดขึ้น GitHub) ต้องตั้ง `DATABASE_URL` ใน Vercel → Settings → Environment Variables แล้วกด Redeploy ทุกครั้งที่เพิ่มหรือแก้ค่า
+- คำสั่ง `npm run create-admin`, `import-sqlite`, `backup` และ `test:critical` อ่าน `.env` / `.env.local` ให้อัตโนมัติ ส่วน `npm run dev` ของ Next.js ก็อ่าน `.env` เช่นกัน ถ้ามี `DATABASE_URL` ใน `.env` เว็บในเครื่องจะใช้ Supabase ตัวเดียวกับเว็บจริง ส่วน `npm test` ใช้ฐานข้อมูลชั่วคราวในหน่วยความจำเสมอ
 - ล็อกอินไม่ได้หลัง deploy: ยังไม่ได้สร้าง Admin บน Supabase (ข้อ 3) บัญชีในเครื่องไม่ได้ขึ้นไปเอง
 - เว็บช้าครั้งแรกหลังไม่มีคนใช้: เป็น cold start ของ Vercel ครั้งถัดไปจะเร็วขึ้น
